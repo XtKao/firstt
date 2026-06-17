@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>คำใบ้จากพี่รหัส</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Prompt', sans-serif;
+            background-color: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #334155;
+        }
+        .card {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+        }
+        h1 {
+            font-size: 1.5rem;
+            color: #0f172a;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        p.subtitle {
+            color: #64748b;
+            font-size: 0.95rem;
+            margin-bottom: 24px;
+        }
+        .hint-box {
+            background: #f1f5f9;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.1rem;
+            color: #475569;
+            letter-spacing: 1.5px;
+            word-wrap: break-word;
+            line-height: 1.6;
+            transition: all 0.5s ease;
+        }
+        .btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 10px;
+            font-family: 'Prompt', sans-serif;
+            font-size: 1rem;
+            font-weight: 400;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+        }
+        .btn:hover {
+            background: #2563eb;
+        }
+        .btn:active {
+            transform: scale(0.97);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1>นี่คือคำใบ้แรกจากพี่</h1>
+        <p class="subtitle">ลองถอดรหัสชุดนี้ดูสิ แล้วจะรู้ว่าพี่คือใคร...</p>
+        
+        <div class="hint-box" id="hintBox">
+            11100000 10111001 10000000<br>
+            11100000 10111000 10011110<br>
+            11100000 10111000 10101000<br>
+            00100000 01011000 01011001
+        </div>
+
+        <button class="btn" id="actionBtn" onclick="revealHint()">แอบดูเฉลย</button>
+    </div>
+
+    <script>
+        function revealHint() {
+            const hintBox = document.getElementById('hintBox');
+            const btn = document.getElementById('actionBtn');
+
+            // เปลี่ยนจากเลขฐานสองเป็นคำใบ้พร้อม Animation นิดหน่อย
+            hintBox.style.opacity = 0;
+            
+            setTimeout(() => {
+                hintBox.innerHTML = "<span style='font-family: Prompt, sans-serif; font-weight: 600;'>เพศ XY</span>";
+                hintBox.style.fontSize = "1.5rem";
+                hintBox.style.color = "#2563eb";
+                hintBox.style.background = "#eff6ff";
+                hintBox.style.opacity = 1;
+                
+                // ซ่อนปุ่มหลังจากกดดูเฉลยแล้ว
+                btn.style.display = "none";
+            }, 300);
+        }
+    </script>
+
+</body>
+</html>

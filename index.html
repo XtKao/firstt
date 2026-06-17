@@ -34,6 +34,16 @@
             transform: translateY(-5px);
             box-shadow: 0 15px 35px rgba(0,0,0,0.08);
         }
+        .top-notice {
+            font-size: 0.9rem;
+            color: #f43f5e;
+            font-weight: 600;
+            margin-bottom: 12px;
+            background: #fff1f2;
+            padding: 6px 16px;
+            border-radius: 50px;
+            display: inline-block;
+        }
         h1 {
             font-size: 1.5rem;
             color: #0f172a;
@@ -76,11 +86,20 @@
         .btn:active {
             transform: scale(0.97);
         }
+        /* สไตล์สำหรับปุ่มตอนที่ถูกล็อค */
+        .btn:disabled {
+            background: #cbd5e1;
+            color: #94a3b8;
+            cursor: not-allowed;
+            transform: none;
+        }
     </style>
 </head>
 <body>
 
     <div class="card">
+        <div class="top-notice">อย่าลืมตามหาพี่ด้วยน่ะ</div>
+        
         <h1>นี่คือคำใบ้แรกจากพี่</h1>
         <p class="subtitle">ลองถอดรหัสชุดนี้ดูสิ แล้วจะรู้ว่าพี่คือใคร...</p>
         
@@ -95,21 +114,35 @@
     </div>
 
     <script>
-        function revealHint() {
-            const hintBox = document.getElementById('hintBox');
-            const btn = document.getElementById('actionBtn');
+        // ==================== ตั้งค่าระบบล็อคเฉลยตรงนี้ ====================
+        // true  == เปิดให้กดปุ่มเฉลยได้
+        // false == ล็อคปุ่มไว้ กดไม่ได้ และเปลี่ยนข้อความเป็น "อย่าเพิ่งยอมแพ้"
+        const canReveal = false; 
+        // =============================================================
 
-            // เปลี่ยนจากเลขฐานสองเป็นคำใบ้พร้อม Animation นิดหน่อย
+        // ส่วนควบคุมการทำงานของปุ่มตอนเปิดหน้าเว็บ
+        const btn = document.getElementById('actionBtn');
+        if (!canReveal) {
+            btn.disabled = true;
+            btn.innerText = "อย่าเพิ่งยอมแพ้";
+        }
+
+        // ฟังก์ชันทำงานเมื่อกดปุ่มเฉลย (จะทำงานเมื่อ canReveal เป็น true เท่านั้น)
+        function revealHint() {
+            if (!canReveal) return; 
+
+            const hintBox = document.getElementById('hintBox');
+            
             hintBox.style.opacity = 0;
             
             setTimeout(() => {
-                hintBox.innerHTML = "<span style='font-family: Prompt, sans-serif; font-weight: 600;'>เพศ XY</span>";
-                hintBox.style.fontSize = "1.5rem";
+                // ปรับคำเฉลยเหลือแค่ XY ตามที่ขอครับ
+                hintBox.innerHTML = "<span style='font-family: Prompt, sans-serif; font-weight: 600;'>XY</span>";
+                hintBox.style.fontSize = "2rem";
                 hintBox.style.color = "#2563eb";
                 hintBox.style.background = "#eff6ff";
                 hintBox.style.opacity = 1;
                 
-                // ซ่อนปุ่มหลังจากกดดูเฉลยแล้ว
                 btn.style.display = "none";
             }, 300);
         }

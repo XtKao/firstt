@@ -68,7 +68,6 @@
             line-height: 1.6;
             transition: all 0.5s ease;
         }
-        /* ดีไซน์ส่วนแสดงรูปภาพตารางใบ้คำ */
         .helper-image-container {
             margin-top: 24px;
             padding-top: 20px;
@@ -85,6 +84,11 @@
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.03);
             border: 1px solid #e2e8f0;
+            cursor: zoom-in; /* เปลี่ยนเคอร์เซอร์เป็นแว่นขยายตอนชี้ที่รูป */
+            transition: transform 0.2s ease;
+        }
+        .helper-image:hover {
+            transform: scale(1.02); /* ขยายรูปนิดนึงตอนเอาเมาส์ชี้ */
         }
         .btn {
             background: #3b82f6;
@@ -110,6 +114,44 @@
             cursor: not-allowed;
             transform: none;
         }
+
+        /* ---------------- สไตล์สำหรับ Modal ขยายรูป ---------------- */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85); /* พื้นหลังสีดำโปร่งแสง */
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .modal-content {
+            max-width: 90%;
+            max-height: 90vh;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            cursor: zoom-out;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .close-btn:hover {
+            color: #cbd5e1;
+        }
     </style>
 </head>
 <body>
@@ -127,15 +169,18 @@
         <button class="btn" id="actionBtn" onclick="revealHint()">แอบดูเฉลย</button>
 
         <div class="helper-image-container">
-            <div class="helper-image-title">💡 ตารางช่วยถอดรหัสรหัสลับ</div>
-            <img src="https://www.sciencefriday.com/wp-content/uploads/2015/08/UTF8-Table-7802.png" alt="UTF-8 Binary Table" class="helper-image">
+            <div class="helper-image-title">💡 ตารางช่วยถอดรหัส (กดเพื่อขยาย)</div>
+            <img src="https://www.sciencefriday.com/wp-content/uploads/2015/08/UTF8-Table-7802.png" alt="UTF-8 Binary Table" class="helper-image" onclick="openModal(this.src)">
         </div>
     </div>
 
+    <div id="imageModal" class="modal" onclick="closeModal()">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="expandedImg">
+    </div>
+
     <script>
-        // ==================== ตั้งค่าระบบล็อคเฉลยตรงนี้ ====================
-        // true  == เปิดให้กดปุ่มเฉลยได้
-        // false == ล็อคปุ่มไว้ กดไม่ได้ และเปลี่ยนข้อความเป็น "อย่าเพิ่งยอมแพ้"
+        // ==================== ตั้งค่าระบบล็อคเฉลย ====================
         const canReveal = false; 
         // =============================================================
 
@@ -160,6 +205,27 @@
                 hintBox.style.opacity = 1;
                 
                 btn.style.display = "none";
+            }, 300);
+        }
+
+        // ==================== ฟังก์ชันสำหรับเปิด-ปิดภาพขยาย ====================
+        const modal = document.getElementById('imageModal');
+        const expandedImg = document.getElementById('expandedImg');
+
+        function openModal(imgSrc) {
+            expandedImg.src = imgSrc;       // เอารูปที่กดมาใส่ใน Modal
+            modal.style.display = 'flex';   // แสดงโครงสร้าง
+            setTimeout(() => {
+                modal.style.opacity = '1';  // เฟดให้สว่างขึ้น (Animation)
+                expandedImg.style.transform = 'scale(1)'; // ขยายรูป
+            }, 10);
+        }
+
+        function closeModal() {
+            modal.style.opacity = '0';      // เฟดให้มืดลง
+            expandedImg.style.transform = 'scale(0.9)'; // หดรูปลง
+            setTimeout(() => {
+                modal.style.display = 'none'; // ซ่อนโครงสร้างหลัง Animation จบ
             }, 300);
         }
     </script>

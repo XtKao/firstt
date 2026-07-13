@@ -11,13 +11,13 @@
         }
         body {
             margin: 0;
-            padding: 0;
+            padding: 20px 0;
             font-family: 'Prompt', sans-serif;
             background-color: #f8fafc;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             color: #334155;
         }
         .card {
@@ -26,7 +26,7 @@
             border-radius: 20px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.05);
             text-align: center;
-            max-width: 450px;
+            max-width: 480px;
             width: 90%;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
@@ -61,12 +61,30 @@
             border-radius: 12px;
             margin-bottom: 24px;
             font-family: 'Courier New', Courier, monospace;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: #475569;
             letter-spacing: 1.5px;
             word-wrap: break-word;
             line-height: 1.6;
             transition: all 0.5s ease;
+        }
+        /* ดีไซน์ส่วนแสดงรูปภาพตารางใบ้คำ */
+        .helper-image-container {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px dashed #e2e8f0;
+        }
+        .helper-image-title {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            margin-bottom: 10px;
+        }
+        .helper-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            border: 1px solid #e2e8f0;
         }
         .btn {
             background: #3b82f6;
@@ -86,7 +104,6 @@
         .btn:active {
             transform: scale(0.97);
         }
-        /* สไตล์สำหรับปุ่มตอนที่ถูกล็อค */
         .btn:disabled {
             background: #cbd5e1;
             color: #94a3b8;
@@ -108,6 +125,11 @@
         </div>
 
         <button class="btn" id="actionBtn" onclick="revealHint()">แอบดูเฉลย</button>
+
+        <div class="helper-image-container">
+            <div class="helper-image-title">💡 ตารางช่วยถอดรหัสรหัสลับ</div>
+            <img src="https://www.sciencefriday.com/wp-content/uploads/2015/08/UTF8-Table-7802.png" alt="UTF-8 Binary Table" class="helper-image">
+        </div>
     </div>
 
     <script>
@@ -117,14 +139,12 @@
         const canReveal = false; 
         // =============================================================
 
-        // ส่วนควบคุมการทำงานของปุ่มตอนเปิดหน้าเว็บ
         const btn = document.getElementById('actionBtn');
         if (!canReveal) {
             btn.disabled = true;
             btn.innerText = "อย่าเพิ่งยอมแพ้";
         }
 
-        // ฟังก์ชันทำงานเมื่อกดปุ่มเฉลย (จะทำงานเมื่อ canReveal เป็น true เท่านั้น)
         function revealHint() {
             if (!canReveal) return; 
 
@@ -133,9 +153,8 @@
             hintBox.style.opacity = 0;
             
             setTimeout(() => {
-                // ปรับคำเฉลยเหลือแค่ XY ตามที่ขอครับ
                 hintBox.innerHTML = "<span style='font-family: Prompt, sans-serif; font-weight: 600;'>XY</span>";
-                hintBox.style.fontSize = "2rem";
+                hintBox.style.fontSize = "2.5rem";
                 hintBox.style.color = "#2563eb";
                 hintBox.style.background = "#eff6ff";
                 hintBox.style.opacity = 1;
